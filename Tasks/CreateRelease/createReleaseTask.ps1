@@ -23,7 +23,7 @@ param()
 
     $manualEnvironments = Get-SuspendedEnvironments $endpoint $releaseDefinitionId $releaseDefinitionEnvironment
     $getArtifactsUrl = "$($endpoint.url)_apis/Release/artifacts/versions?releaseDefinitionId=$releaseDefinitionId"
-    $createReleaseUrl = "$($endpoint.url)_apis/release/releases"
+    $createReleaseUrl = "$($endpoint.url)_apis/release/releases?api-version-3.2-preview-.4"
     $getReleaseEnvironment = "$($endpoint.url)_apis/Release/releases/{0}/environments/{1}"
 
     try {
@@ -109,7 +109,7 @@ $acc
         "Request body: "
         $body
 
-        $newRelease = Invoke-WebRequest -Method Post -Uri $createReleaseUrl -ContentType "application/json" -Headers @{Authorization=$authHeader} -Body $body
+        $newRelease = Invoke-WebRequest -Method "Post" -Uri $createReleaseUrl -ContentType "application/json" -Headers @{Authorization=$authHeader} -Body $body
 
     } catch {
         if (-not $useLatestArtifacts) {
