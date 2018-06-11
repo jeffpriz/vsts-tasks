@@ -23,8 +23,8 @@ param()
 
     $manualEnvironments = Get-SuspendedEnvironments $endpoint $releaseDefinitionId $releaseDefinitionEnvironment
     $getArtifactsUrl = "$($endpoint.url)_apis/Release/artifacts/versions?releaseDefinitionId=$releaseDefinitionId"
-    $createReleaseUrl = "$($endpoint.url)_apis/release/releases?api-version=4.1-preview"
-    $getReleaseEnvironment = "$($endpoint.url)_apis/Release/releases/{0}/environments/{1}?api-version=4.1-preview.5"
+    $createReleaseUrl = "$($endpoint.url)_apis/release/releases"
+    $getReleaseEnvironment = "$($endpoint.url)_apis/Release/releases/{0}/environments/{1}"
 
     try {
         "-----------------------------------------------------------------"
