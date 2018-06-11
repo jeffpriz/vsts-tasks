@@ -93,7 +93,7 @@ $body= @"
 $acc
     ],
     "isDraft":false,
-    "manualEnvironments":[]
+    "manualEnvironments":[$manualEnvironments]
 }
 "@
 
