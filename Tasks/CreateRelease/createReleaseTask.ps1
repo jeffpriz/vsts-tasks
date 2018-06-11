@@ -51,14 +51,17 @@ param()
             "alias": "{0}",
             "instanceReference": {{
             "id": {1},
-            "name": null
+            "name": {2},
+            "sourceBranch":"refs/heads/ci_mobile",
+            "sourceVersion":"c7af72e3fffd1f22d3abfe7ea2b9aebbba1159df",
+            "sourceRepositoryType":"TfsGit"
             }}
-        }},
+        }}
 "@
 $acc = ""
 if ($useLatestArtifacts) {
     "Use latest artifacts"
-    $($artifacts | ForEach-Object -Process {$acc = $acc + ($artifactFormat -f $_.alias, $_.defaultVersion)})
+    $($artifacts | ForEach-Object -Process {$acc = $acc + ($artifactFormat -f $_.alias, $_.defaultVersion, $_.name)})
 } else {
     
     "Use binded artifacts from current release"
@@ -92,7 +95,9 @@ $body= @"
 "description": "$releaseDescription",
     "artifacts": [
 $acc
-    ]
+    ],
+    "isDraft":false,
+    "manualEnvironments":[]
 }
 "@
 
