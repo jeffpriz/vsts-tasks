@@ -2,7 +2,7 @@
 	"manifestVersion": 1,
 	"id": "vnzk-vsts-tasks-for-tfs",
 	"name": "VSTS Create Release Task",
-	"version": "0.1.11",
+	"version": "0.1.12",
 	"publisher": "OneLuckiDev",
 	"public": false,
 	"targets": [

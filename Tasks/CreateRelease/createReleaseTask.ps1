@@ -50,12 +50,7 @@ param()
         {{
             "alias": "{0}",
             "instanceReference": {{
-            "id": "14420",
-            "name": "DoNotUseAN_.7",
-            "sourceBranch":"refs/heads/ci_mobile",
-            "sourceVersion":"c7af72e3fffd1f22d3abfe7ea2b9aebbba1159df",
-            "sourceRepositoryId":"b2338db6-ad58-490d-801d-cf4a1a0eeb2c",
-            "sourceRepositoryType":"TfsGit"
+            "id": "{1}"
             }}
         }}
 "@
