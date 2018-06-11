@@ -90,9 +90,6 @@ $body= @"
 {
 "definitionId": $releaseDefinitionId,
 "description": "$releaseDescription",
-"isDraft": $isDraft,
-"manualEnvironments": [$manualEnvironments],
-"reason": "none",
     "artifacts": [
 $acc
     ]
