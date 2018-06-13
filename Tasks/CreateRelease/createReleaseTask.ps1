@@ -164,7 +164,7 @@ $acc
             Start-Sleep -s $delay
             "Check release status $attempt..."
 
-            $status = Get-ReleaseEnvironmentStatus $endpoint $releaseId, $envId 
+            $status = Get-ReleaseEnvironmentStatus $endpoint $releaseId $envId 
 
             $status
             if ($status -eq 'succeeded') {

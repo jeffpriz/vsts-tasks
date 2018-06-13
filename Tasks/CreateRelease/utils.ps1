@@ -122,14 +122,12 @@ function Get-ThisReleaseEnvironmentID {
 }
 
 
-function StartReleaseEnvironmentDeploy {
-    param(
-        $endpoint,
-        [string] $releaseId,
-        [string] $envId
-    )
+function StartReleaseEnvironmentDeploy($endpoint,[string] $releaseId,[string] $envId) {
 
-    $status = Get-ReleaseEnvironmentStatus $endpoint $releaseId $envId
+
+    Write-Debug "Starting for $releaseId"
+    Write-Debug "env $envId"
+    $status = Get-ReleaseEnvironmentStatus -endpoint $endpoint -releaseId $releaseId -envId $envId
     if($status -ieq  "notStarted")
     {
     Write-Host "Calling to set envId $envId to inprogress"
@@ -160,12 +158,8 @@ else{
 }
 
 
-function Get-ReleaseEnvironmentStatus {
-    param(
-        $endpoint,
-        [string] $releaseId,
-        [string] $envId
-    )
+function Get-ReleaseEnvironmentStatus($endpoint, [string]$releaseId, [string]$envId) {
+
     $url = ""
     $authHeader = Get-AuthHeaderValue $endpoint
     Write-debug "checking status for Rel $releaseId env $envId"
