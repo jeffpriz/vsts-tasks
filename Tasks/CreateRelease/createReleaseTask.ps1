@@ -3,7 +3,7 @@ param()
 
     . (Join-Path $PSScriptRoot utils.ps1)
 
-    Trace-VstsEnteringInvocation $MyInvocation
+    Trace-VstsEnteringInvocation $MyInvocationMyInvocation
 
     $releaseDescription = Get-VstsInput -Name releaseDescription
     $releaseDescription = if($releaseDescription) { $releaseDescription } else { "Created by REST API Call" }
@@ -22,13 +22,18 @@ param()
     $slidingTimeout = (Get-VstsInput -Name slidingTimeoutForLinkedRelease) -eq "true"
 
     $manualEnvironments = Get-SuspendedEnvironments $endpoint $releaseDefinitionId $releaseDefinitionEnvironment
+    $requestedEnvironmentId = Get-RequestedEnvironment $endpoint $releaseDefinitionId $releaseDefinitionEnvironment
+
     $getArtifactsUrl = "$($endpoint.url)_apis/Release/artifacts/versions?releaseDefinitionId=$releaseDefinitionId"
     $createReleaseUrl = "$($endpoint.url)_apis/release/releases?api-version=3.2-preview.4"
     $getReleaseEnvironment = "$($endpoint.url)_apis/Release/releases/{0}/environments/{1}"
+    $triggerReleaseEnvironment
 
+
+    
     try {
         "-----------------------------------------------------------------"
-        "Get lastes artifacts for release definition #$releaseDefinitionId"
+        "Get lastest artifacts for release definition #$releaseDefinitionId"
         "About to send request: $getArtifactsUrl" 
         $result = Invoke-WebRequest -Method Get -Uri $getArtifactsUrl -ContentType "application/json" -Headers @{Authorization=$authHeader}
         $result
@@ -118,13 +123,18 @@ $acc
     "-----------------------------------------------------------------"
     if($newRelease.StatusCode -ne 200){
         $newRelease
-        (ConvertFrom-Json $newRelease.Content)
+        $newReleaseObj = (ConvertFrom-Json $newRelease.Content)
         Write-Error  "Request failed"
     }
     else {
         Write-Host "Release successfully created"
     }
 
+    Write-Debug $newRelease
+
+    $thisReleaseEnvId = Get-ThisReleaseEnvironmentID $endpoint $newReleaseObj.id $releaseDefinitionEnvironment
+
+    Write-Debug "The Release Env Id is $thisReleaseEnvId";
     "Request response:"
     $newRelease
 

@@ -54,6 +54,65 @@ function Get-SuspendedEnvironments {
     return $skip
 }
 
+function Get-RequestedEnvironment {
+    param(
+        $endpoint,
+        $releaseDefinitionId,
+        [string] $envName
+    )
+
+    if([String]::IsNullOrEmpty($envName)) {
+        return ""
+    }
+
+    $authHeader = Get-AuthHeaderValue $endpoint
+    
+    $getReleaseEnvsri = "$($endpoint.url)_apis/release/definitions/$releaseDefinitionId"
+
+    $result = Invoke-WebRequest -Method Get -Uri $getReleaseEnvsri -ContentType "application/json" -Headers @{Authorization=$authHeader}
+    $envs = (ConvertFrom-Json $result.Content).environments | Select-Object -ExpandProperty Name 
+
+    if (-not $envs.Contains($envName)) {
+        Write-Error "Release Definition #$releaseDefinitionId doesn't contain ""$envName"" environment"
+    }
+    
+    $envs = $envs | Where-Object { $_ -eq $envName }
+    $envID = $envs[0].id;
+    $skip = """" + [String]::Join(""",""", $envs) + """"
+    Write-Host "Environment $envName is $envID "
+    
+    return $envID
+}
+
+function Get-ThisReleaseEnvironmentID {
+    param(
+        $endpoint,
+        $releaseId,
+        [string] $envName
+    )
+
+    if([String]::IsNullOrEmpty($envName)) {
+        return ""
+    }
+
+    $authHeader = Get-AuthHeaderValue $endpoint
+    
+    $getReleaseEnvsri = "$($endpoint.url)_apis/release/releases/$releaseId"
+
+    $result = Invoke-WebRequest -Method Get -Uri $getReleaseEnvsri -ContentType "application/json" -Headers @{Authorization=$authHeader}
+    $envs = (ConvertFrom-Json $result.Content).environments | Select-Object -ExpandProperty Name 
+
+    if (-not $envs.Contains($envName)) {
+        Write-Error "Release Definition #$releaseDefinitionId doesn't contain ""$envName"" environment"
+    }
+    
+    $envs = $envs | Where-Object { $_ -eq $envName }
+    $envID = $envs[0].id;
+    $skip = """" + [String]::Join(""",""", $envs) + """"
+    Write-Host "Environment $envName is $envID "
+    
+    return $envID
+}
 
 
 function ExponentialDelay {
