@@ -139,9 +139,8 @@ $acc
 
     $thisReleaseEnvId = Get-ThisReleaseEnvironmentID $endpoint $releaseId $releaseDefinitionEnvironment
 
-    Write-Debug "calling function to kick deploy"
     $temp = StartReleaseEnvironmentDeploy $endpoint $releaseId $thisReleaseEnvId
-    Write-Debug "back from call"
+    
     Write-Debug "The Release Env Id is $thisReleaseEnvId";
     "Request response:"
     $newRelease
@@ -165,8 +164,7 @@ $acc
             Start-Sleep -s $delay
             "Check release status $attempt..."
 
-            $result = Invoke-WebRequest -Method Get -Uri $url -ContentType "application/json" -Headers @{Authorization=$authHeader}
-            $status = (ConvertFrom-Json $result.Content).status
+            $status = Get-ReleaseEnvironmentStatus $endpoint $releaseId, $envId 
 
             $status
             if ($status -eq 'succeeded') {

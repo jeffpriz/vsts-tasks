@@ -3,8 +3,8 @@
   "name": "CreateRelease",
   "friendlyName": "Create Release",
   "description": "Creates new release as part of current release pipe line",
-  "author": "Ihor Venzhyk",
-  "helpMarkDown": "[More Information](https://github.com/Venzhyk/vsts-tasks)",
+  "author": "Ihor Venzhyk and Jeff Przylucki",
+  "helpMarkDown": "[More Information](https://github.com/Venzhyk/vsts-tasks) or https://github.com/jeffpriz/vsts-tasks",
   "category": "Deploy",
   "visibility": [
     "Build",
@@ -17,7 +17,7 @@
   "version": {
     "Major": "0",
     "Minor": "3",
-    "Patch": "44"
+    "Patch": "45"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "CreateRelease $(message)",

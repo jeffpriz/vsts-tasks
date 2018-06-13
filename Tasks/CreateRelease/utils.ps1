@@ -129,6 +129,9 @@ function StartReleaseEnvironmentDeploy {
         [string] $envId
     )
 
+    $status = Get-ReleaseEnvironmentStatus $endpoint $releaseId $envId
+    if($status -ieq  "notStarted")
+    {
     Write-Host "Calling to set envId $envId to inprogress"
 
     $authHeader = Get-AuthHeaderValue $endpoint
@@ -147,11 +150,33 @@ $body=@"
 
 
     Write-Host "Started deploy in environment $result"
-    
+}
+else{
+    Write-Host "The requested environment appears to already have been started, so did not attempt to restart"
+    Write-Host "the environment had a status of $status"
+}
 
     return
 }
 
+
+function Get-ReleaseEnvironmentStatus {
+    param(
+        $endpoint,
+        [string] $releaseId,
+        [string] $envId
+    )
+    $getReleaseEnvironment = "$($endpoint.url)_apis/Release/releases/{0}/environments/{1}"
+
+    $url = $getReleaseEnvironment -f $releaseId, $envId        
+        "Linked Release details: $url"
+
+        
+        $result = Invoke-WebRequest -Method Get -Uri $url -ContentType "application/json" -Headers @{Authorization=$authHeader}
+        $status = (ConvertFrom-Json $result.Content).status
+
+        return $status
+}
 
 function ExponentialDelay {
     param(
