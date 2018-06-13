@@ -17,7 +17,7 @@
   "version": {
     "Major": "0",
     "Minor": "3",
-    "Patch": "46"
+    "Patch": "47"
   },
   "minimumAgentVersion": "1.95.0",
   "instanceNameFormat": "CreateRelease $(message)",

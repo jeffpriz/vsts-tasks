@@ -167,11 +167,12 @@ function Get-ReleaseEnvironmentStatus {
         [string] $envId
     )
 
+    $authHeader = Get-AuthHeaderValue $endpoint
     Write-debug "checking status for Rel $releaseId env $envId"
-    $getReleaseEnvironment = "$($endpoint.url)_apis/release/releases/{0}/environments/{1}?api-version=3.2-preview"
 
-    $url = $getReleaseEnvironment -f $releaseId, $envId    
-    Write-Host "Linked Release details: $url"        
+    $getReleaseEnvsri = "$($endpoint.url)_apis/release/releases/{0}/environments/{1}?api-version=3.2-preview"
+    $url = $getReleaseEnvsri -f $releaseId, $envId 
+        
         $result = Invoke-WebRequest -Method Get -Uri $url -ContentType "application/json" -Headers @{Authorization=$authHeader}
         $status = (ConvertFrom-Json $result.Content).status
 
