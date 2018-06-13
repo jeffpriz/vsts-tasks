@@ -103,11 +103,14 @@ function Get-ThisReleaseEnvironmentID {
 
     $url = $getReleaseEnvsri -f $releaseId
     $result = Invoke-WebRequest -Method Get -Uri $url -ContentType "application/json" -Headers @{Authorization=$authHeader}
-    $envs = (ConvertFrom-Json $result.Content).environments 
+    $release = $result | ConvertFrom-Json
+    Write-Debug "Release is : $release";
+    $envs = $release.environments;
+    #$envs = (ConvertFrom-Json $result.Content).environments 
     Write-Debug "found environments in release  :  $envs" 
-    if (-not $envs.Contains($envName)) {
-        Write-Error "Release Definition #$releaseDefinitionId doesn't contain ""$envName"" environment"
-    }
+    #if (-not $envs.Contains($envName)) {
+    #    Write-Error "Release Definition #$releaseDefinitionId doesn't contain ""$envName"" environment"
+    #}
     
     $envs = $envs | Where-Object { $_.name -eq $envName }
     $envID = $envs[0].id;
