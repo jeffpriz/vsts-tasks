@@ -132,7 +132,7 @@ $acc
     $releaseId = $newReleaseObj.id;
 
     Write-Debug $newRelease
-    Write-Debug "The Id is $newReleaseObj.id"
+    Write-Debug "The Id is $releaseId"
 
     $thisReleaseEnvId = Get-ThisReleaseEnvironmentID $endpoint $releaseId $releaseDefinitionEnvironment
 
