@@ -129,10 +129,7 @@ function StartReleaseEnvironmentDeploy {
         [string] $envId
     )
 
-    if([String]::IsNullOrEmpty($envName)) {
-        return ""
-    }
-
+    Write-Host "Calling to set envId $envId to inprogress"
 
     $authHeader = Get-AuthHeaderValue $endpoint
     
@@ -148,9 +145,11 @@ $body=@"
     $result = Invoke-WebRequest -Method Patch -Uri $url -ContentType "application/json" -Headers @{Authorization=$authHeader} -Body $body
     $release = $result | ConvertFrom-Json
 
+
     Write-Host "Started deploy in environment $result"
     
 
+    return
 }
 
 
