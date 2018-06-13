@@ -3,7 +3,7 @@ param()
 
     . (Join-Path $PSScriptRoot utils.ps1)
 
-    Trace-VstsEnteringInvocation $MyInvocationMyInvocation
+    Trace-VstsEnteringInvocation $MyInvocation
 
     $releaseDescription = Get-VstsInput -Name releaseDescription
     $releaseDescription = if($releaseDescription) { $releaseDescription } else { "Created by REST API Call" }
