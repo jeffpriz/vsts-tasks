@@ -133,7 +133,7 @@ function StartReleaseEnvironmentDeploy {
 
     $authHeader = Get-AuthHeaderValue $endpoint
     
-    $getReleaseEnvsri = "$($endpoint.url)_apis/release/releases/{0}/environments{1}?api-version=3.2-preview"
+    $getReleaseEnvsri = "$($endpoint.url)_apis/release/releases/{0}/environments/{1}?api-version=3.2-preview"
 
     $url = $getReleaseEnvsri -f $releaseId, $envId
 $body=@"
