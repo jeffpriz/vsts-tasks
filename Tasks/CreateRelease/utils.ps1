@@ -106,8 +106,9 @@ function Get-ThisReleaseEnvironmentID {
     $release = $result | ConvertFrom-Json
     Write-Debug "Release is : $release";
     $envs = $release.environments;
+    $envcount = $envs.Count
     #$envs = (ConvertFrom-Json $result.Content).environments 
-    Write-Debug "found environments in release  :  $envs" 
+    Write-Debug "found environments in release  : $envcount" 
     #if (-not $envs.Contains($envName)) {
     #    Write-Error "Release Definition #$releaseDefinitionId doesn't contain ""$envName"" environment"
     #}
@@ -118,6 +119,38 @@ function Get-ThisReleaseEnvironmentID {
     Write-Host "Environment $envName is $envID "
     
     return $envID
+}
+
+
+function StartReleaseEnvironmentDeploy {
+    param(
+        $endpoint,
+        [string] $releaseId,
+        [string] $envId
+    )
+
+    if([String]::IsNullOrEmpty($envName)) {
+        return ""
+    }
+
+
+    $authHeader = Get-AuthHeaderValue $endpoint
+    
+    $getReleaseEnvsri = "$($endpoint.url)_apis/release/releases/{0}/environments{1}?api-version=3.2-preview"
+
+    $url = $getReleaseEnvsri -f $releaseId, $envId
+$body=@"
+{
+"status": "inprogress"
+}
+"@
+
+    $result = Invoke-WebRequest -Method Patch -Uri $url -ContentType "application/json" -Headers @{Authorization=$authHeader} -Body $body
+    $release = $result | ConvertFrom-Json
+
+    Write-Host "Started deploy in environment $result"
+    
+
 }
 
 

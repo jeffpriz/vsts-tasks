@@ -139,6 +139,8 @@ $acc
 
     $thisReleaseEnvId = Get-ThisReleaseEnvironmentID $endpoint $releaseId $releaseDefinitionEnvironment
 
+    .StartReleaseEnvironmentDeploy $endpoint $releaseId $thisReleaseEnvId
+
     Write-Debug "The Release Env Id is $thisReleaseEnvId";
     "Request response:"
     $newRelease
