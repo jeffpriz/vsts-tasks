@@ -87,7 +87,7 @@ function Get-RequestedEnvironment {
 function Get-ThisReleaseEnvironmentID {
     param(
         $endpoint,
-        $releaseId,
+        [string] $releaseId,
         [string] $envName
     )
 
@@ -99,7 +99,7 @@ function Get-ThisReleaseEnvironmentID {
     
     $getReleaseEnvsri = "$($endpoint.url)_apis/release/releases/$releaseId"
 
-    $result = Invoke-WebRequest -Method Get -Uri $getReleaseEnvsri -ContentType "application/json" -Headers @{Authorization=$authHeader}
+    $result = Invoke-WebRequest -Method Post -Uri $getReleaseEnvsri -ContentType "application/json" -Headers @{Authorization=$authHeader}
     $envs = (ConvertFrom-Json $result.Content).environments | Select-Object -ExpandProperty Name 
 
     if (-not $envs.Contains($envName)) {

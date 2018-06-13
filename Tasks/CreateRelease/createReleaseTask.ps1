@@ -129,10 +129,12 @@ $acc
     else {
         Write-Host "Release successfully created"
     }
+    $releaseId = $newReleaseObj.id;
 
     Write-Debug $newRelease
+    Write-Debug "The Id is $newReleaseObj.id"
 
-    $thisReleaseEnvId = Get-ThisReleaseEnvironmentID $endpoint $newReleaseObj.id $releaseDefinitionEnvironment
+    $thisReleaseEnvId = Get-ThisReleaseEnvironmentID $endpoint $releaseId $releaseDefinitionEnvironment
 
     Write-Debug "The Release Env Id is $thisReleaseEnvId";
     "Request response:"
