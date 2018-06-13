@@ -180,7 +180,7 @@ $acc
                 Write-Error "Linked Release canceled"
             }
         }
-        Write-Error "Failed by timeout ($waitTimeout mins)"
+        Write-Error "Failed by timeout  $waitTimeout mins"
 
     } 
     "... end"

@@ -95,11 +95,14 @@ function Get-ThisReleaseEnvironmentID {
         return ""
     }
 
+    Write-Debug "the release id to retrieve is $releaseId"
+    Write-Debug "looking for environment $envName"
     $authHeader = Get-AuthHeaderValue $endpoint
     
-    $getReleaseEnvsri = "$($endpoint.url)_apis/release/releases/$releaseId?api-version=3.2-preview"
+    $getReleaseEnvsri = "$($endpoint.url)_apis/release/releases/{0}?api-version=3.2-preview"
 
-    $result = Invoke-WebRequest -Method Post -Uri $getReleaseEnvsri -ContentType "application/json" -Headers @{Authorization=$authHeader}
+    $url = $getReleaseEnvsri -f $releaseId
+    $result = Invoke-WebRequest -Method Post -Uri $url -ContentType "application/json" -Headers @{Authorization=$authHeader}
     $envs = (ConvertFrom-Json $result.Content).environments | Select-Object -ExpandProperty Name 
 
     if (-not $envs.Contains($envName)) {
