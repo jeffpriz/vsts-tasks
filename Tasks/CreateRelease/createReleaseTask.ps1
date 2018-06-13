@@ -129,7 +129,7 @@ $acc
     else {
         Write-Host "Release successfully created"
     }
-    $releaseId = $newReleaseObj.id;
+    $releaseId = $newRelease.id;
 
     Write-Debug $newRelease
     Write-Debug "The Id is $releaseId"
