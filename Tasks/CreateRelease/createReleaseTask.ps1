@@ -139,8 +139,9 @@ $acc
 
     $thisReleaseEnvId = Get-ThisReleaseEnvironmentID $endpoint $releaseId $releaseDefinitionEnvironment
 
+    Write-Debug "calling function to kick deploy"
     $temp = StartReleaseEnvironmentDeploy $endpoint $releaseId $thisReleaseEnvId
-
+    Write-Debug "back from call"
     Write-Debug "The Release Env Id is $thisReleaseEnvId";
     "Request response:"
     $newRelease
