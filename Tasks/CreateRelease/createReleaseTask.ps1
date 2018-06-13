@@ -152,8 +152,8 @@ $acc
         $releaseId = $json.id
         $envId = $json.environments | Where-Object { $_.name -eq $releaseDefinitionEnvironment }  | Select-Object -ExpandProperty id
 
-        $url = $getReleaseEnvironment -f $releaseId, $envId        
-        "Linked Release details: $url"
+        #$url = $getReleaseEnvironment -f $releaseId, $envId        
+        #"Linked Release details: $url"
 
         $attempt = 0
         $failAfter = [DateTime]::Now.AddMinutes($waitTimeout)
