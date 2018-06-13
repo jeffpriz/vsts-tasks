@@ -123,13 +123,13 @@ $acc
     "-----------------------------------------------------------------"
     if($newRelease.StatusCode -ne 200){
         $newRelease
-        $newReleaseObj = (ConvertFrom-Json $newRelease.Content)
+        $newReleaseObj = $newRelease.Content | ConvertFrom-Json
         Write-Error  "Request failed"
     }
     else {
         Write-Host "Release successfully created"
     }
-    $releaseId = $newRelease.id;
+    $releaseId = $newReleaseObj.id;
 
     Write-Debug $newRelease
     Write-Debug "The Id is $releaseId"
