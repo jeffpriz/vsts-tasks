@@ -129,9 +129,12 @@ $acc
     else {
         Write-Host "Release successfully created"
     }
-    $releaseId = $newReleaseObj.id;
+    
+    
 
-    Write-Debug $newRelease
+    Write-Debug "the new release says $newRelease"
+    $newReleaseObj = $newRelease | ConvertFrom-Json
+    $releaseId = $newReleaseObj.id;
     Write-Debug "The Id is $releaseId"
 
     $thisReleaseEnvId = Get-ThisReleaseEnvironmentID $endpoint $releaseId $releaseDefinitionEnvironment
